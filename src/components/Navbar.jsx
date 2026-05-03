@@ -8,12 +8,19 @@ export const Navbar = () => {
     return (
         <nav className="navbar navbar-light bg-light mb-3 shadow-sm px-5">
             <div className="container">
-                <Link to="/">
-                    <img 
-                        src="https://starwars-visualguide.com" 
-                        style={{ height: "50px" }} 
-                        alt="Star Wars Logo" 
-                    />
+                <Link to="/" style={{ textDecoration: 'none' }}>
+                    <span 
+                        className="navbar-brand mb-0 h1 text-warning fw-bold" 
+                        style={{ 
+                            fontSize: "2rem", 
+                            letterSpacing: "-2px", 
+                            lineHeight: "0.8",
+                            textTransform: "uppercase",
+                            fontFamily: "sans-serif"
+                        }}
+                    >
+                        STAR<br/>WARS
+                    </span>
                 </Link>
                 
                 <div className="ms-auto d-flex align-items-center">

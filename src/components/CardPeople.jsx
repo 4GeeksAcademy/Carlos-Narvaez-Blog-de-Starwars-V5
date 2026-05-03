@@ -19,7 +19,9 @@ export const CardPeople = ({ people }) => {
                 <p className="card-text m-0">Hair: {people.properties?.hair_color}</p>
                 <p className="card-text">Eyes: {people.properties?.eye_color}</p>
                 <div className="d-flex justify-content-between">
-                    <Link to={`/single/${people.uid}`} className="btn btn-outline-primary">Learn more!</Link>
+                    <Link to={`/character/${people.uid}`} className="btn btn-outline-primary">
+                        Learn more!
+                    </Link>
                     <button 
                         className="btn btn-outline-warning"
                         onClick={() => dispatch({ type: "add_favorite", payload: people })}

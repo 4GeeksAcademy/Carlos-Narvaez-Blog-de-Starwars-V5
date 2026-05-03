@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useGlobalReducer from "../hooks/useGlobalReducer";
+import useGlobalReducer from "../hooks/useGlobalReducer"; // 1. Import the hook
 
 export const CardPlanets = ({ planets }) => {
+    const { dispatch } = useGlobalReducer(); // 2. Get the dispatch function
+
     return (
         <div className="card m-2" style={{ width: "18rem", flex: "none" }}>
             <img 
@@ -14,6 +16,7 @@ export const CardPlanets = ({ planets }) => {
                     height: "300px",     
                     objectFit: "cover"
                 }} 
+                onError={(e) => { e.target.src = "https://starwars-visualguide.com"; }}
             />
             <div className="card-body">
                 <h5 className="card-title">{planets.properties?.name || planets.name}</h5>
@@ -22,10 +25,16 @@ export const CardPlanets = ({ planets }) => {
                 <p className="card-text">Climate: {planets.properties?.climate}</p>                   
                 
                 <div className="d-flex justify-content-between mt-3">
-                    <Link to={`/single/${planets.uid}`} className="btn btn-outline-primary">
+                    <Link to={`/planet/${planets.uid}`} className="btn btn-outline-primary">
                         Learn more!
                     </Link>
-                    <button className="btn btn-outline-warning">♥</button>
+                    {/* 3. Add the onClick event here */}
+                    <button 
+                        className="btn btn-outline-warning"
+                        onClick={() => dispatch({ type: "add_favorite", payload: planets })}
+                    >
+                        <i className="fa fa-heart"></i>
+                    </button>
                 </div>
             </div>
         </div>

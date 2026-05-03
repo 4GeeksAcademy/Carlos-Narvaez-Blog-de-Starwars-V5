@@ -10,19 +10,18 @@ export const Navbar = () => {
             <div className="container">
                 <Link to="/">
                     <img 
-                        src="https://wikimedia.org" 
+                        src="https://starwars-visualguide.com" 
                         style={{ height: "50px" }} 
                         alt="Star Wars Logo" 
                     />
                 </Link>
                 
                 <div className="ms-auto d-flex align-items-center">
-                    {/* Favorites Dropdown */}
                     <div className="dropdown me-3">
                         <button 
                             className="btn btn-primary dropdown-toggle" 
                             type="button" 
-                            id="dropdownMenuButton1" 
+                            id="favoritesDropdown" 
                             data-bs-toggle="dropdown" 
                             aria-expanded="false"
                         >
@@ -30,19 +29,21 @@ export const Navbar = () => {
                             <span className="badge bg-secondary ms-1">{store.favoritos.length}</span>
                         </button>
                         
-                        <ul className="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownMenuButton1" style={{ minWidth: "220px" }}>
+                        <ul className="dropdown-menu dropdown-menu-end shadow" aria-labelledby="favoritesDropdown" style={{ minWidth: "225px" }}>
                             {store.favoritos.length === 0 ? (
                                 <li className="text-center text-muted py-2">Empty</li>
                             ) : (
                                 store.favoritos.map((fav, index) => (
                                     <li key={index} className="d-flex justify-content-between align-items-center px-3 py-1">
-                                        {/* text-black class ensures visibility; text-nowrap prevents line breaks */}
-                                        <span className="text-black text-nowrap">
-                                            {fav.name}
+                                        <span className="text-dark text-nowrap">
+                                            {fav.properties?.name || fav.name}
                                         </span>
                                         <button 
                                             className="btn btn-sm text-danger border-0 p-1"
-                                            onClick={() => dispatch({ type: "delete_favorite", payload: fav })}
+                                            onClick={(e) => {
+                                                e.stopPropagation(); 
+                                                dispatch({ type: "delete_favorite", payload: fav });
+                                            }}
                                         >
                                             <i className="fa fa-trash"></i>
                                         </button>

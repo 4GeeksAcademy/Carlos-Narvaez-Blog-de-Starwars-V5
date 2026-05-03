@@ -56,20 +56,32 @@ export default function storeReducer(store, action = {}) {
         vehicles: vehicles
       };
 
-        case 'add_favorite':
-            // Evitar duplicados comparando el nombre
-            const exists = store.favoritos.find(fav => fav.name === action.payload.name);
-            if (exists) return store;
-            return {
-                ...store,
-                favoritos: [...store.favoritos, action.payload]
-            };
+    case 'add_favorite':
+        // Handle names that might be in action.payload.name OR action.payload.properties.name
+        const newName = action.payload.name || action.payload.properties?.name;
+        
+        // Check if it already exists using the same logic
+        const alreadyExists = store.favoritos.find(fav => {
+            const favName = fav.name || fav.properties?.name;
+            return favName === newName;
+        });
 
-        case 'delete_favorite':
-            return {
-                ...store,
-                favoritos: store.favoritos.filter(item => item.name !== action.payload.name)
-            };
+        if (alreadyExists) return store;
+
+        return {
+            ...store,
+            favoritos: [...store.favoritos, action.payload]
+        };
+
+    case 'delete_favorite':
+        const nameToDelete = action.payload.name || action.payload.properties?.name;
+        return {
+            ...store,
+            favoritos: store.favoritos.filter(item => {
+                const itemName = item.name || item.properties?.name;
+                return itemName !== nameToDelete;
+            })
+        };
 
     //////////////////////////////////
     case "change_saludo":
